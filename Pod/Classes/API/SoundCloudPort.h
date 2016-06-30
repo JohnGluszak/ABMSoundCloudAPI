@@ -20,7 +20,7 @@
 - (void)requestPlaylistsWithSuccess:(nullable void (^)(NSArray  *_Nonnull playlists))successBlock
                             failure:(nullable void (^)(NSError *_Nonnull error))failureBlock;
 
-- (void)requestLikedTracksWithSuccess:(nullable void (^)(NSDictionary *songsDict))successBlock
+- (void)requestLikedTracksWithSuccess:(nullable void (^)(NSArray *_Nonnull songs))successBlock
                               failure:(nullable void (^)(NSError *_Nonnull error))failureBlock;
 
 - (void)requestPlaylistWithID:(nonnull NSString *) playlistID
