@@ -127,6 +127,22 @@ NSString *PROVIDER_IDENTIFIER = @"SoundCloud_Credentials";
     }];
 }
 
+- (void)requestLikedTracksWithSuccess:(nullable void (^)(NSDictionary *songsDict))successBlock
+                              failure:(nullable void (^)(NSError *_Nonnull error))failureBlock {
+    NSString *path = @"/me/likes";
+    NSDictionary *params = @{@"oauth_token": self.credentials.accessToken};
+    
+    self.lastOperation = [self.oAuth2Manager GET:path parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            successBlock(responseObject);
+        } else {
+            failureBlock([NSError createParsingError]);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failureBlock(error);
+    }];
+}
+
 - (void)requestPlaylistWithID:(NSString *) playlistID
                   withSuccess:(void (^)(NSDictionary *songsDict))successBlock
                       failure:(void (^)(NSError *error))failureBlock {
